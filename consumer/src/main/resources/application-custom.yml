@@ -1,0 +1,16 @@
+
+saturn:
+  application:
+    domain: "payback"
+    tenantid: "gmarket"
+    api-info:
+      name: "payback-api"
+      api-package: "com.ebaykorea.payback.api"
+      version:
+        major: "v1"
+        full: "v1.0.0"
+
+kafka:
+  consumer:
+    topic:
+      OrderCompletedEvent: bz_carbon_order_completed_gmkt

@@ -1,0 +1,39 @@
+
+saturn:
+  application:
+    domain: "payback"
+    tenantid: "gmarket"
+    api-info:
+      name: "payback-api"
+      api-package: "com.ebaykorea.payback.api"
+      version:
+        major: "v1"
+        full: "v1.0.0"
+
+###################################################
+# DCM Configurations
+###################################################
+ebay.kr.dcm:
+  serviceUrl: "https://dcmservice.gmarket.co.kr/api/connection/%s/%s/?%s"
+  applicationName: PAYBACK_API
+  datasources:
+    name: tigerDataSource
+    connectionName: tiger
+  hikariCp:
+    minimumIdle: 1
+  krb5.conf: "/etc/config/krb5.conf"
+  login.config: "/etc/config/login.conf"
+
+apis:
+  reward:
+    url: "http://rewardservice.gmarket.co.kr"
+  order:
+    url: "http://order-api-av.gmarket.co.kr/v1"
+  club:
+    url: "https://clubapi.gmarket.co.kr"
+  payment:
+    url: "http://payment-api-av.gmarket.co.kr"
+  transaction:
+    url: "http://transaction-api-av.gmarket.co.kr/v1"
+  quilt:
+    url: "https://quilt-overmind.gmarket.co.kr/api"

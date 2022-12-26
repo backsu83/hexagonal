@@ -1,0 +1,37 @@
+description = "api"
+
+apply plugin: 'org.unbroken-dome.test-sets'
+
+testSets {
+  componentTest {
+    dirName = 'test-component'
+  }
+}
+
+tasks.withType(Test) {
+  useJUnitPlatform()
+}
+
+dependencies {
+
+  //openfeign
+  implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+  implementation "com.ebaykorea.saturn:saturn-spring-boot-starter-circuitbreaker:${saturnStarterVersion}"
+  implementation "io.github.openfeign:feign-jackson"
+  implementation "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
+  implementation "io.github.resilience4j:resilience4j-feign:${resilience4jVersion}"
+  implementation "io.github.resilience4j:resilience4j-retry:${resilience4jVersion}"
+  implementation "io.github.resilience4j:resilience4j-annotations:${resilience4jVersion}"
+
+  //swagger2
+  implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+
+  //mssql (saturnProceduer)
+  implementation "com.ebaykorea.saturn:saturn-spring-boot-starter-datasource:${saturnStarterVersion}"
+  implementation "com.ebaykorea.saturn:saturn-spring-boot-starter-mssql:${saturnStarterVersion}"
+
+  //component test
+  componentTestImplementation sourceSets.test.output
+  componentTestImplementation 'io.specto:hoverfly-java-junit5:0.14.3'
+  componentTestImplementation 'org.springframework.boot:spring-boot-starter-aop'
+}

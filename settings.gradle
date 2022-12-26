@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        maven { url 'https://prm.ebaykorea.com/nexus/repository/maven-group/' }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'payback'
+include 'api'
+include 'scheduler'
+include 'consumer'
+

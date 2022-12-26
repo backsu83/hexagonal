@@ -1,0 +1,17 @@
+description = "consumer"
+
+dependencies {
+
+  //openfeign
+  implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+  implementation "com.ebaykorea.saturn:saturn-spring-boot-starter-circuitbreaker:${saturnStarterVersion}"
+  implementation "io.github.openfeign:feign-jackson"
+  implementation "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
+  implementation "io.github.resilience4j:resilience4j-feign:${resilience4jVersion}"
+  implementation "io.github.resilience4j:resilience4j-retry:${resilience4jVersion}"
+  implementation "io.github.resilience4j:resilience4j-annotations:${resilience4jVersion}"
+
+  //kafka
+  implementation "org.springframework.kafka:spring-kafka:${kafkaVersion}"
+  testImplementation "org.springframework.kafka:spring-kafka-test:${kafkaVersion}"
+}

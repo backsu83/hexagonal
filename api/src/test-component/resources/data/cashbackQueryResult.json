@@ -1,0 +1,15 @@
+{
+  "totalCashbackAmount": 2295,
+  "cashbackOrders": [
+    {
+      "amount": 2295,
+      "cashbackType": "I",
+      "itemNo": "1100439676",
+      "buyerNo": "132870993",
+      "tradeStatus": "30",
+      "useEnableDate": 1672758000,
+      "smileClubYn": "Y",
+      "shopType": null
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+
+saturn:
+  application:
+    domain: "payback"
+    tenantid: "gmarket"
+    api-info:
+      name: "payback-api"
+      api-package: "com.ebaykorea.payback.api"
+      version:
+        major: "v1"
+        full: "v1.0.0"
+  datasource:
+    appName: PAYBACK_API
+    userName: daemon_app
+    tenant: gmarketdev #개발: gmarketdev, 운영: gmarket
+
+#TODO paybackapi 도메인 생성 필요
+apis:
+  payback:
+    url: "http://paybackapi-dev.gmarket.co.kr"

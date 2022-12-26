@@ -1,0 +1,9 @@
+###################################################
+# DEV 용 DataSource Configurations
+###################################################
+saturn:
+  datasource:
+    serviceUrl: "https://devdcmservice.gmarket.co.kr/api/connection/%s/%s/?%s"
+    userAgent: "DCM-Client/3.2.1 (X11; Ubuntu; Linux i686; rv:36.0) Java/1.8.0"
+    cacheTime: 1471228928
+    debug: false

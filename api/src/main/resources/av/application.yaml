@@ -1,0 +1,93 @@
+###################################################
+# LOCAL
+###################################################
+server:
+  port: 8080
+
+spring:
+  application:
+    name: payback
+  profiles:
+    include: custom
+  jpa:
+    hibernate:
+      show_sql: true
+      format_sql: true
+      inspect_stacktrace: true
+      naming_physical_strategy: org.hibernate.boot.entity.naming.PhysicalNamingStrategyStandardImpl  #naming.physical-strategy
+
+logging:
+  pattern:
+    console: "[%-20(%cyan(%date{HH:mm:ss.SSS})] [%thread]) [%X{moa.requestid}] %highlight(%-5level) %magenta(%marker|%logger{36}): %msg%n%rEx" # console pattern
+  level:
+    root: INFO
+    com.ebaykorea.saturn: DEBUG
+    MoAAppender: INFO
+    MoALogger: INFO
+
+###################################################
+# feign Configurations
+###################################################
+feign:
+  httpclient:
+    enabled: true
+    maxConnections: 1000
+    maxConnectionsPerRoute: 100
+  circuitbreaker.enabled: false
+  client.config:
+    default:
+      connectTimeout: 5000  # resilience4j timeoutDuration 보다 커야 함.
+      readTimeout: 5000
+  compression:
+    request:
+      enabled: true
+      mime-types:
+        - application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+# Resilience4j Configurations
+# 설정관련 - https://sabarada.tistory.com/206
+resilience4j.timelimiter:
+  configs:
+    default:
+      timeoutDuration: 3s
+      cancelRunningFuture: true
+  instances:
+    retryApi:
+      baseConfig: default
+      timeoutDuration: 900ms
+
+#resilience4j.thread-pool-bulkhead:
+#  configs:
+#    default:
+#      coreThreadPoolSize: 25
+#      maxThreadPoolSize: 25
+#      queueCapacity: 50
+
+###################################################
+# MoA Configurations
+###################################################
+saturn:
+  groupId: com.ebaykorea
+  artifactId: payback
+  moa:
+    domainGroup: gmkt
+    domain: gmkt.reward.api
+    host: http://devmoafw.ebaykorea.com
+
+###################################################
+# Common Management Configurations - DO NOT EDIT
+###################################################
+management:
+  server.port: 8089
+  endpoints.web.exposure.include: "*"
+  endpoint.health.show-details: ALWAYS
+  health:
+    db.enabled: false
+    redis.enabled: false
+  metrics:
+    export.prometheus.enabled: true
+    cache.instrument: true
+    web.server.request.auto-time.enable: false

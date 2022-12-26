@@ -1,0 +1,29 @@
+
+saturn:
+  application:
+    domain: "payback"
+    tenantid: "gmarket"
+    api-info:
+      name: "payback-api"
+      api-package: "com.ebaykorea.payback.api"
+      version:
+        major: "v1"
+        full: "v1.0.0"
+  datasource:
+    appName: PAYBACK_API
+    userName: daemon_app
+    tenant: gmarketdev #개발: gmarketdev, 운영: gmarket
+
+apis:
+  reward:
+    url: "http://rewardservice-dev.gmarket.co.kr"
+  order:
+    url: "http://order-api-dev.gmarket.co.kr/v1"
+  club:
+    url: "https://clubapi-dev.gmarket.co.kr"
+  payment:
+    url: "http://payment-api-dev.gmarket.co.kr"
+  transaction:
+    url: "http://transaction-api-dev.gmarket.co.kr/v1"
+  quilt:
+    url: "https://quilt-overmind-dev.gmarket.co.kr/api"

@@ -1,0 +1,96 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'org.springframework.boot' version '2.4.13'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'java'
+    id 'idea'
+    id 'org.unbroken-dome.test-sets'        version '4.0.0'
+}
+
+allprojects {
+    group 'com.ebaykorea.payback'
+}
+
+repositories {
+    maven {
+        url "https://prm.ebaykorea.com/nexus/repository/maven-group/"
+        allowInsecureProtocol = true
+    }
+    mavenCentral()
+}
+
+bootJar {
+    enabled = false
+}
+
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'groovy'
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    repositories {
+        mavenCentral()
+        maven { url "https://prm.ebaykorea.com/nexus/repository/maven-group/" }
+    }
+
+    ext {
+        set("saturnStarterVersion", "2.4.15")
+        set("mapstructVersion", "1.4.2.Final")
+        set("lombokVersion", "1.18.24")
+        set("springCloudVersion", '2020.0.5')
+        set('resilience4jVersion', "1.7.0")
+        set("springSpockVersion", "2.3-groovy-4.0")
+        set("kafkaVersion", "2.7.10")
+    }
+
+    dependencies {
+        //springboot starter core
+        implementation platform(SpringBootPlugin.BOM_COORDINATES)
+        implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+        //ebaykorea standard core
+        implementation "com.ebaykorea.saturn:saturn-spring-boot-starter-ebaykr:${saturnStarterVersion}"
+        implementation "com.ebaykorea.saturn:saturn-spring-boot-starter-moa:${saturnStarterVersion}"
+
+        //third party library
+        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+        annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        implementation "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+        implementation 'com.google.code.gson:gson'
+        implementation 'com.google.guava:guava:26.0-jre'
+
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation "org.spockframework:spock-core:${springSpockVersion}"
+        testImplementation "org.spockframework:spock-spring:${springSpockVersion}"
+        testImplementation 'it.ozimov:embedded-redis:0.7.2'
+        testImplementation 'com.tngtech.archunit:archunit:1.0.1'
+    }
+
+    test {
+        useJUnitPlatform()
+        failFast = true
+        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    }
+
+    clean {
+        delete file('src/main/generated')
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

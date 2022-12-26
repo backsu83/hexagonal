@@ -1,0 +1,35 @@
+pipeline {
+    agent {
+        label "Centos"
+    }
+    tools {
+      jdk 'jdk-11.0.1'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh './gradlew clean'
+                sh './gradlew build --daemon --configure-on-demand --parallel --build-cache -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                sh './gradlew --continue test -d'
+            }
+        }
+
+        stage('Component Test') {
+            steps {
+                sh './gradlew --continue componentTest --info'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh './gradlew clean'
+        }
+    }
+}
